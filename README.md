@@ -1,7 +1,7 @@
 OpenShift Container Platform Workshop
 ===============================================
 
-Workshop on the OpenShift Container Platform for the AppChats series
+Workshop on the OpenShift Container Platform
 
 ## Table of Contents
 
