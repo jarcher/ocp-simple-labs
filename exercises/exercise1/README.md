@@ -16,9 +16,9 @@ To signify your project from other users, utilize the project name _appchats-&lt
 
 Fill in the rest of details in the dialog as shown below
 
-* **Name**: appchats-&lt;USERNAME&gt;
-* **Display Name**: AppChats Workshop - &lt;USERNAME&gt; 
-* **Description**:  AppChats Workshop for &lt;USERNAME&gt; 
+* **Name**: my-&lt;USERNAME&gt;
+* **Display Name**: My Workshop - &lt;USERNAME&gt; 
+* **Description**:  My Workshop for &lt;USERNAME&gt; 
 
 ![New Project Dialog](images/new-project-dialog.png "New Project Dialog")
 
@@ -30,7 +30,7 @@ Applications are built and deployed within projects in OpenShift. In this sectio
 
 Once a project has been created, it will appear in the list of other projects that you have access to on the catalog. 
 
-**Click the appchats-&lt;USERNAME&gt; Project** from the navigation pane to enter the project. 
+**Click the my-&lt;USERNAME&gt; Project** from the navigation pane to enter the project. 
 
 ![Project Overview](images/project-overview.png "Project Overview")
 
@@ -65,8 +65,7 @@ One of the most popular frameworks for microservices style applications using Ja
 
 The sample application for the workshop is located within the following Git repository. 
 
-
-[https://gitlab.xom.cloud/appchats/appchats-sample-app](https://gitlab.xom.cloud/appchats/appchats-sample-app)
+[https://github.com/RedHatWorkshops/spring-sample-app](https://github.com/RedHatWorkshops/spring-sample-app)
 
 The application provides a number of mechanisms that will help showcase some of the key qualities of container/microservices based architectures along with how they can be implemented within OpenShift. 
 
@@ -84,8 +83,8 @@ Select **Next**
 
 Enter the following configuration values in the fields provided:
 
-* **Application Name**: appchats-sample-app
-* **Git Repository**: https://gitlab.xom.cloud/appchats/appchats-sample-app.git
+* **Application Name**: myspring-sample-app
+* **Git Repository**: https://github.com/RedHatWorkshops/spring-sample-app.git
 
 ![New Application Configuration](images/openjdk-configuration.png "New Application Configuration")
 
