@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: appchats-sample-app-pipeline-template
+parameters:
+- name: APP_NAME
+  description: The name assigned to the application.
+  displayName: Application Name
+  required: true
+  value: appchats-sample-app
+- name: APP_PORT
+  description: The port assigned to the application.
+  displayName: Application Port
+  required: true
+  value: "8080"
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      pipeline.alpha.openshift.io/uses: '[{"name": "${APP_NAME}", "namespace": "", "kind": "DeploymentConfig"}]'
+    creationTimestamp: null
+    labels:
+      name: ${APP_NAME}
+    name: ${APP_NAME}-pipeline
+  spec:
+    strategy:
+      jenkinsPipelineStrategy:
+        env:
+        - name: APP_NAME
+          value: "${APP_NAME}"
+        - name: APP_PORT
+          value: "${APP_PORT}"
+        jenkinsfile: |-
+          pipeline {
+            agent any
+            stages {
+              stage('Build Image') {
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      openshift.selector("bc", "${env.APP_NAME}").startBuild("--follow", "--wait")
+                    }
+                  }
+                }
+              }
+              stage('Rollout Application') {
+                steps {
+                  script {
+                    openshift.withCluster() {
+                      def result = null
+                      deploymentConfig = openshift.selector("dc", "${env.APP_NAME}")
+
+                      timeout(10) {
+                        result = deploymentConfig.rollout().status("-w")
+                      }
+
+                      if (result.status != 0) {
+                        error(result.err)
+                      }
+                    }
+                  }
+                }
+              }
+              stage('Verify Deployed Application') {
+                steps {
+                  timeout(5) {
+                    waitUntil {
+                      script {
+                        def r = sh script: "wget -q http://${env.APP_NAME}:${env.APP_PORT}/healthz -O /dev/null", returnStatus: true
+                        return (r==0);   
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+      type: JenkinsPipeline
